@@ -1,3 +1,4 @@
+using MiApi;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,5 +13,7 @@ app.MapGet("/db", async (IConfiguration config) =>
     await using var cmd = new NpgsqlCommand("SELECT version()", conn);
     return await cmd.ExecuteScalarAsync();
 });
+
+app.MapGet("/", (string? nombre) => Saludo.Generar(nombre));
 
 app.Run();
